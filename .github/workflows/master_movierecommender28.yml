@@ -26,9 +26,16 @@ jobs:
         platform: python
         platform-version: '3.7'
 
-    - name: 'Deploy to Azure Web App'
-      uses: azure/webapps-deploy@v2
-      with:
-        app-name: 'movierecommender28'
-        slot-name: 'production'
-        publish-profile: ${{ secrets.AzureAppService_PublishProfile_1918345cc3d643d5abb9318fc09db345 }}
+    - name: Login to Azure
+        uses: azure/login@v1
+        with:
+          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_25860F32E756427FB77BCE04CF4FAC1E }}
+          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_23FDEC68EB164512BC05CA50D1C38DF0 }}
+          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_A12C2CE2E87F45DFBA9C0F7768AE92A0 }}
+
+      - name: 'Deploy to Azure Web App'
+        uses: azure/webapps-deploy@v2
+        id: deploy-to-webapp
+        with:
+          app-name: 'movieRecomender28'
+          slot-name: 'Production'
